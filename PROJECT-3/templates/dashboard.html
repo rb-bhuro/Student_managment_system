@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2>Welcome, {{ user.name }}!</h2>
+
+{% if user.image %}
+<img src="{{ url_for('uploaded_file', filename=user.image) }}" alt="Profile Image" class="img-thumbnail" width="150" />
+{% endif %}
+
+<hr/>
+
+{% if user.role == 'student' %}
+<h3>Your Subjects</h3>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Subject Code</th>
+      <th>Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for subject in subjects %}
+    <tr>
+      <td>{{ subject.sub_code }}</td>
+      <td>{{ subject.name }}</td>
+    </tr>
+    {% else %}
+    <tr><td colspan="2">No subjects added yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<hr/>
+
+<h3>Your Results</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Declaration Date</th>
+      <th>View Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for result in results %}
+    <tr>
+      <td>{{ result.declaration_date }}</td>
+      <td><a href="{{ url_for('results', result_id=result.id) }}" class="btn btn-info btn-sm">View</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="2">No results declared yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Use the navigation bar to manage subjects or declare results.</p>
+{% endif %}
+{% endblock %}

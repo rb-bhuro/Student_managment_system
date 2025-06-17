@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Declare Result{% endblock %}
+{% block content %}
+<h2>Declare Result</h2>
+<form method="POST">
+  <div class="mb-3">
+    <label for="student_roll" class="form-label">Student Roll Number</label>
+    <input type="text" class="form-control" id="student_roll" name="student_roll" required />
+  </div>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Marks Obtained</th>
+        <th>Total Marks</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for subject in subjects %}
+      <tr>
+        <td>{{ subject.name }} ({{ subject.sub_code }})</td>
+        <td><input type="number" name="marks_{{ subject.sub_code }}" min="0" max="100" required /></td>
+        <td><input type="number" name="total_{{ subject.sub_code }}" min="1" max="100" required /></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <button type="submit" class="btn btn-primary">Declare Result</button>
+</form>
+{% endblock %}
